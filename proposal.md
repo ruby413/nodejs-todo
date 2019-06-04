@@ -40,6 +40,17 @@
     3. 차례로 한칸씩만 선택해서 잠수함을 공격할 수 있다.
     4. 먼저 상대방의 모든 잠수함이 격추시키는 편이 이긴다.
 
+<br/>
+
+> 프로젝트 구조도
+- 프로젝트 구조도는 아래와 같다.
+
+![battleship structure](img/battleship_structure.png)
 
 
+<br/>
 
+> 프로젝트 Class Diagram
+- 프로젝트 Class Diagram은 아래와 같다.
+
+![battleship structure](img/class_diagram.png)
