@@ -1,3 +1,8 @@
+const ControlData = require('./control_data');
+
+const data = new ControlData();
+let userData = ""
+
 class Login {
     // constructor(생성자). 이름을 바꿀 수 없다.
     constructor(order) {
@@ -6,8 +11,10 @@ class Login {
       this.order = order;
     }
 
-    signUp(){
-        console.log(this.order)
+    signUp(information){
+        let [category, userInfo]= information.match(/[\w\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]+/g)
+        userData = category + '\n' + userInfo;
+        data.makeDataFile(userData)
     }
   }
   
