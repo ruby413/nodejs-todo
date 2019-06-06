@@ -29,11 +29,12 @@ class AskforLogin {
         })
     }
     signUp([name, id, pw]){
-        login.signUp(name +"," + id + "," + pw)
+        login.signUp([name, id, pw])
     }
 
     login([name, id, pw]){
-        console.log(`${id} 님 게임시작합니다.`)
+        login.checkLogin([id, pw])
+        //console.log(`${id} 님 게임시작합니다.`)
     }
 }
 
@@ -54,4 +55,3 @@ const startGame = () => {
 startGame()
 
 
-//module.exports = startGame;
