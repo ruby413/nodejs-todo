@@ -1,5 +1,4 @@
 const ControlData = require('./control_data');
-
 const data = new ControlData();
 
 class Login {
@@ -26,11 +25,17 @@ class Login {
   }
 
   checkLogin(inputDataArray){
-    this.alreadyExistData(inputDataArray) ? console.log("로그인 되었습니다.") : console.log("잘못입력하셨습니다.")
+    if(this.alreadyExistData(inputDataArray) ){
+      console.log("로그인 되었습니다.") 
+      return true
+    }else{
+      console.log("잘못입력하셨습니다.")
+      return false
+    } 
   }
 
     
-  }
+}
   
 
 module.exports = Login;

@@ -1,3 +1,6 @@
+const net = require('net');
+// const crypto = require('crypto');
+// const shasum = crypto.createHash('sha256');
 const Login = require('./login');
 const login = new Login();
 const readline = require('readline');
@@ -5,6 +8,7 @@ let r = readline.createInterface({
     input:process.stdin,
     output:process.stdout
 });
+
 
 const order = (order, callback) => {
     r.setPrompt(order);
@@ -29,13 +33,44 @@ class AskforLogin {
         })
     }
     signUp([name, id, pw]){
+        //let cryptoPW = shasum.update(pw);
         login.signUp([name, id, pw])
     }
 
     login([name, id, pw]){
-        login.checkLogin([id, pw])
-        //console.log(`${id} 님 게임시작합니다.`)
+        //let cryptoPW = shasum.update(pw);
+        return login.checkLogin([id, pw])
+
     }
+}
+
+const connectedServer = (loginStatus) => {
+    if(loginStatus){
+        const client = net.connect(
+            {host:'localhost', port:5000},
+            function(){
+                console.log(`게임을 시작합니다.`);
+        }); 
+    }
+   
+    // let answer = ""
+    //     client.on('data', function(data){   
+    //         console.log("someone : " + data.toString());
+    //         r.prompt();
+    //     });
+        
+    //     r.on('line', function(line){
+    //         if (line == 'exit'){
+    //             console.log('request disconnect');
+    //             client.write(line);
+    //             r.close()
+    //         }else{
+    //             answer = line;
+    //             client.write(line);
+    //         }
+    //         r.prompt()
+    //     });
+    //     console.log(answer)
 }
 
 const askforLogin = new AskforLogin();
@@ -46,7 +81,7 @@ const startGame = () => {
             return askforLogin.askName().then(askforLogin.askId).then(askforLogin.askPw).then(askforLogin.signUp)
         }
         if(answer === "로그인"){
-            return askforLogin.askId().then(askforLogin.askPw).then(askforLogin.login)
+            return askforLogin.askId().then(askforLogin.askPw).then(askforLogin.login).then(connectedServer);
         }
         startGame()
     } )
