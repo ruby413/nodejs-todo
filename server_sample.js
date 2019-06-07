@@ -26,17 +26,21 @@ const goToGameRoom = (waitingRoom, gameRoom) => {
 
 server.on('connection', function(socket){
     waitingRoom.push(socket);
-    console.log(waitingRoom.length + "번째 접속자입니다.")
-
     if(waitingRoom.length%2 === 0){
         goToGameRoom(waitingRoom, gameRoom)  //return [Array(2), Array(2)...]
     }
-    // }else{
-    //     let tempRoom = waitingRoom
-    //     tempRoom.pop();
-    //     goToGameRoom(tempRoom, gameRoom)     //return [Array(2), Array(2)...]
-    //     waitingRoom.reverse().splice(1);
-    // }
+    if(waitingRoom.length !== 0){
+        waitingRoom[0].write("user의 짝이 맞지 않아 waiting 중 입니다.");
+    }
+    // socket.on('data', function(data){
+    //     //console.log(socket._peername.port +" : "+ data.toString())
+    //     //waitingRoom.forEach(function(waitingPlayer){
+    //         //if(otherSocket!=socket){
+    //         waitingRoom[0].write("user의 짝이 맞지 않아 waiting 중 입니다.");
+    //         //}
+    //     //});
+    // });
+    
     console.log("gameRoom"+gameRoom)
     console.log("gameRoom 1"+gameRoom[0])
     console.log("gameRoom 2"+gameRoom[1])
