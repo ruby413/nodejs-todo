@@ -1,7 +1,7 @@
 const net = require('net');
 // const crypto = require('crypto');
 // const shasum = crypto.createHash('sha256');
-const Login = require('./login');
+const Login = require('./app/login');
 const login = new Login();
 const readline = require('readline');
 let r = readline.createInterface({
@@ -49,9 +49,14 @@ const connectedServer = (loginStatus) => {
         const client = net.connect(
             {host:'localhost', port:5000},
             function(){
-                console.log(`게임을 시작합니다.`);
+                console.log(`게임에 접속했습니다.`);
         }); 
+        client.on('data', function(data){   
+            console.log(data.toString());
+        });
+        
     }
+    
    
     // let answer = ""
     //     client.on('data', function(data){   
