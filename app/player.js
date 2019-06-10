@@ -17,19 +17,18 @@ class Player {
     }
 
     placehorizontalShip(size, x, y){
-        this.sea[y-1][x-1];
-        if(this.sea.length - x >= size){
-            this.sea[y-1].forEach((empty, i)=>{
-                if(i >= (x-1)){
+        if(sea[y-1].length - x >= size){
+            sea[y-1].forEach((empty, i)=>{
+                if((x-1)<= i && i< (x-1)+size){
                     sea[y-1][i] = empty + 1
                 }   
             })
         }else{
-            this.sea[y-1].forEach((empty, i)=>{
-                if(i >= this.sea.length - x){
+            sea[y-1].forEach((empty, i)=>{
+                if(i >= sea[y-1].length - size){
                     sea[y-1][i] = empty + 1
                 }   
             })
-        } /// x좌표에 따라 sea 를 1로 설정 -> test 필요
+        } 
     }
 }
