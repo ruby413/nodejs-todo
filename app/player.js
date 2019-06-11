@@ -6,8 +6,7 @@ const game = new Game;
      * 0: 빈 자리
      * size: size 
      * -1 : 잠수함 부분 폭파
-     * -2 : 잠수함 격추
-     * -3 : 빈공간 격추
+     * -2 : 빈공간 격추
      */
 
 class Player {
@@ -15,7 +14,6 @@ class Player {
     constructor() {
         this.sea = game.sea;
         this.ship = Setting.ships;    // [ 5, 4, 3, 3, 2 ]
-        this.shipInfo = {}
     }
 
     // place ship
@@ -25,6 +23,8 @@ class Player {
             return this.placeHorizontalShip(size, x, y)  // return ship
         }else if(direction === "v" && this.checkShip(size, direction, x, y)){
             return this.placeVerticalShip(size, x, y)   // return ship
+        }else{
+            console.log("이미 배가 위치하고 있습니다.") 
         }
     }
 
@@ -32,13 +32,13 @@ class Player {
         if(direction === "h"){
             for(let i=0; i<size; i++){
                 if(this.sea[y-1][x-1+i] > 1){
-                    throw "이미 배가 위치하고 있습니다."
+                    return false;
                 }
             }
         }else{
             for(let i=0; i<size; i++){
                 if(this.sea[y-1+i][x-1] > 1){
-                    throw "이미 배가 위치하고 있습니다."
+                    return false;
                 }
             }
         }
@@ -84,28 +84,37 @@ class Player {
     //shoot ship
     shootShip(x, y){
         let arr = this.sea[y-1];
+        let size = this.sea[y-1][x-1]
         if(this.sea[y-1][x-1] > 1) {
             arr.splice(x-1, 1, -1);
+            this.sunkShip(size)
         }else{
-            arr.splice(x-1, 1, -3);
+            arr.splice(x-1, 1, -2);
             console.log("공간이 비어있습니다.")
         }
         return this.sea;
     }
 
+    sunkShip(size){
+        let checkNum = 0;
+        this.sea.forEach((row)=>{
+            if(row.indexOf(size) === -1) {
+                checkNum += 1
+            } 
+            if(checkNum === Setting.gridRows){
+                return console.log(`크기가 ${size} 인 잠수함이 격추되었습니다.`)
+            }
+        })
+    }
     
 }
 
 const player = new Player;
 
-try {
-    console.log(player.placeShip(5, "h", 2, 3))
-    // console.log(player.placeShip(5, "h", 1, 3))
-    // console.log(player.placeShip(2, "v", 1, 2))
-    console.log(player.shootShip(2, 3))
-    console.log(player.shootShip(2, 4))
-}
-catch(e) {
-    console.log(e);
-}
+// console.log(player.placeShip(5, "h", 2, 3))
+// console.log(player.placeShip(5, "h", 1, 3))
+console.log(player.placeShip(2, "v", 1, 2))
+console.log(player.shootShip(1, 2))
+console.log(player.shootShip(1, 3))
+
 
