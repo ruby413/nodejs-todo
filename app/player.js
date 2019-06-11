@@ -102,7 +102,10 @@ class Player {
                 checkNum += 1
             } 
             if(checkNum === Setting.gridRows){
-                return console.log(`크기가 ${size} 인 잠수함이 격추되었습니다.`)
+                console.log(`크기가 ${size} 인 잠수함이 격추되었습니다.`)
+                this.ship.splice(this.ship.indexOf(size), 1)
+                console.log(this.ship)
+                //return size;
             }
         })
     }
@@ -111,10 +114,13 @@ class Player {
 
 const player = new Player;
 
+
 // console.log(player.placeShip(5, "h", 2, 3))
 // console.log(player.placeShip(5, "h", 1, 3))
-console.log(player.placeShip(2, "v", 1, 2))
+console.log(player.placeShip(3, "v", 1, 2))
 console.log(player.shootShip(1, 2))
 console.log(player.shootShip(1, 3))
+console.log(player.shootShip(1, 4))
+game.win(player.ship)
 
 
