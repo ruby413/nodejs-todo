@@ -1,8 +1,10 @@
 const fs = require('fs');
+const csv = require('csvtojson')
 
 class ControlData {
     constructor() {
-        this.dataURL = './data/client_data.csv'
+        this.dataURL = './../data/client_data.csv'
+        this.dataJSON = [];
     }
 
     makeClientData(information){
@@ -22,11 +24,12 @@ class ControlData {
     }
 
     readClientData(){
-        if(this.existDataFile()){
-            return fs.readFileSync(this.dataURL, 'utf8');
-        }
+        return new Promise((resolve)=>{
+            csv().fromFile(this.dataURL).then((jsonObj)=>{
+                resolve(jsonObj)
+            })
+        })
     }
-
 }
 
 module.exports = ControlData;

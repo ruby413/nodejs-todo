@@ -3,29 +3,34 @@ const data = new ControlData();
 
 class Login {
 
-  alreadyExistData(inputDataArray){
-    let clientData = data.readClientData()
-    let sameDataArray = [];
-    inputDataArray.forEach((info)=>{
-      let sameData = clientData.match(new RegExp(info,'g'))
-      if(sameData !== null){
-        sameDataArray.push(sameData[0]);
-      }
+  async alreadyExistData(inputDataArray){
+    let [name, ID, PW] = inputDataArray;
+    let clientData = await data.readClientData();
+    clientData.forEach((infoObj)=>{
+      if( infoObj["name"] === name ) {
+        return true;
+      } 
+      if( infoObj["ID"] === ID ) {
+        return true;
+      } 
+      if( infoObj["PW"] === PW ) {
+        return true;
+      } 
     })
-    return JSON.stringify(inputDataArray) === JSON.stringify(sameDataArray) ? true : false
+    return false;
+   
   }
 
-  signUp(inputDataArray){
-    if(!data.existDataFile() || !this.alreadyExistData(inputDataArray)){
-      data.makeClientData(inputDataArray) 
+  async signUp(inputDataArray){
+    if(!data.existDataFile() || !await this.alreadyExistData(inputDataArray)){
       console.log("회원가입이 완료되었습니다.")
     }else{
       console.log("이미 사용하고 계시는 정보입니다.")
     }
   }
 
-  checkLogin(inputDataArray){
-    if(this.alreadyExistData(inputDataArray) ){
+  async checkLogin(inputDataArray){
+    if(await this.alreadyExistData(inputDataArray) ){
       console.log("로그인 되었습니다.") 
       return true
     }else{
@@ -37,5 +42,4 @@ class Login {
     
 }
   
-
 module.exports = Login;
